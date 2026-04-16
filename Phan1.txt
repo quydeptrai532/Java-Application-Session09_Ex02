@@ -1,0 +1,12 @@
+
+
+Phần 1 - Phân tích logic: Tại sao if (guestName == null) lại vô dụng?
+Đoạn code kiểm tra null bên trong hàm hoàn toàn vô dụng và không bao giờ được chạy tới đối với khách truy cập lần đầu là do cơ chế mặc định của annotation @CookieValue:
+
+Trong Spring Boot, các annotation như @CookieValue, @RequestParam hay @RequestHeader đều có một thuộc tính ngầm định là required = true.
+
+Điều này có nghĩa là Spring Boot đóng vai trò như một "bảo vệ cửa". Nó yêu cầu trình duyệt gửi lên phải có dính kèm cookie guest_name.
+
+Khi một khách lạ lần đầu vào web, cookie này chưa tồn tại. Anh "bảo vệ" Spring Boot lập tức chặn đứng Request này lại và ném thẳng ra lỗi 400 Bad Request (MissingRequestCookieException) trước khi luồng xử lý kịp đi vào bên trong thân hàm homePage.
+
+Vì hàm chưa được gọi, lệnh if (guestName == null) đương nhiên không có cơ hội được thực thi.
