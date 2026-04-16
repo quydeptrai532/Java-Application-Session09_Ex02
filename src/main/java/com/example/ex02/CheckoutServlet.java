@@ -38,6 +38,6 @@ public class CheckoutServlet extends HttpServlet {
         request.setAttribute("message", message);
 
         // 5. Forward (chuyển tiếp) sang file giao diện .jsp
-        request.getRequestDispatcher("/checkout-page.jsp").forward(request, response);
+        request.getRequestDispatcher("/checkout-page.html").forward(request, response);
     }
 }
